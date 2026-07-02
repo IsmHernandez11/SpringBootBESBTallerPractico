@@ -2,6 +2,7 @@ package com.krakedev.proyectos.controllers;
 
 import java.util.List;
 
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +34,15 @@ public class TareaController {
 			Tarea tareaGuardado = service.crear(tarea);
 			return ResponseEntity.status(HttpStatus.CREATED).body(tareaGuardado);
 		} catch (RuntimeException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+
+		    if(e.getMessage().equals("Prioridad no válida")){
+
+		        return ResponseEntity
+		                .badRequest()
+		                .body(Map.of("error","Prioridad no válida"));
+		    }
+
+		    return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 

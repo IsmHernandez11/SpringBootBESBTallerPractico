@@ -29,6 +29,13 @@ public class TareaService {
     }
 
     public Tarea crear(Tarea tarea) {
+    	
+    	if (!tarea.getPrioridad().equalsIgnoreCase("ALTA")
+    	        && !tarea.getPrioridad().equalsIgnoreCase("MEDIA")
+    	        && !tarea.getPrioridad().equalsIgnoreCase("BAJA")) {
+
+    	    throw new RuntimeException("Prioridad no válida");
+    	}
 
         Proyecto proyecto = proyectoRepository.findById(tarea.getProyecto().getId())
                 .orElseThrow(() -> new RuntimeException(
@@ -60,6 +67,14 @@ public class TareaService {
     }
 
     public Tarea actualizar(int id, Tarea tarea) {
+    	
+    	if (!tarea.getPrioridad().equalsIgnoreCase("ALTA")
+    	        && !tarea.getPrioridad().equalsIgnoreCase("MEDIA")
+    	        && !tarea.getPrioridad().equalsIgnoreCase("BAJA")) {
+
+    	    throw new RuntimeException("Prioridad no válida");
+    	}
+    	
         Tarea tareaExistente = tareaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No existe la tarea con id: " + id));
 
@@ -80,6 +95,7 @@ public class TareaService {
         tareaExistente.setDescripcion(tarea.getDescripcion());
         tareaExistente.setFechaLimite(tarea.getFechaLimite());
         tareaExistente.setCostoEstimado(tarea.getCostoEstimado());
+        tareaExistente.setPrioridad(tarea.getPrioridad());
         tareaExistente.setProyecto(proyecto);
         tareaExistente.setEmpleados(empleadosEncontrados);
 

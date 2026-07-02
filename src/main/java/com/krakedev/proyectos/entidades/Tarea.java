@@ -30,6 +30,9 @@ public class Tarea {
 	@Column(nullable = false)
 	private double costoEstimado;
 	
+	@Column(nullable = false, length = 20)
+	private String prioridad;
+	
 	@ManyToOne
 	@JoinColumn(name = "proyecto_id", nullable = false) // Una tarea solo tiene un proyecto, proyecto tiene varias tareas
 	private Proyecto proyecto;
@@ -48,14 +51,15 @@ public class Tarea {
 		super();
 	}
 
-	public Tarea(String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto,
-			List<Empleado> empleados) {
-		super();
-		this.descripcion = descripcion;
-		this.fechaLimite = fechaLimite;
-		this.costoEstimado = costoEstimado;
-		this.proyecto = proyecto;
-		this.empleados = empleados;
+	public Tarea(String descripcion, LocalDate fechaLimite, double costoEstimado, String prioridad,
+	        Proyecto proyecto, List<Empleado> empleados) {
+	    super();
+	    this.descripcion = descripcion;
+	    this.fechaLimite = fechaLimite;
+	    this.costoEstimado = costoEstimado;
+	    this.prioridad = prioridad;
+	    this.proyecto = proyecto;
+	    this.empleados = empleados;
 	}
 
 	public int getId() {
@@ -88,6 +92,14 @@ public class Tarea {
 
 	public void setCostoEstimado(double costoEstimado) {
 		this.costoEstimado = costoEstimado;
+	}
+	
+	public String getPrioridad() {
+	    return prioridad;
+	}
+
+	public void setPrioridad(String prioridad) {
+	    this.prioridad = prioridad;
 	}
 
 	public Proyecto getProyecto() {
